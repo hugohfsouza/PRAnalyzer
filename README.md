@@ -1,17 +1,10 @@
 # PRAnalyzer
 
 ## What is it?
-**PRAnalyzer** is a component written in python capable of analyzing each line changed in a Pull Request. Based on this analysis it is possible to define whether the altered line is:
-- functions
-	- removed
-	- added
+**PRAnalyzer** is a component written in python capable of analyzing each changed line in a Pull Request for the following languages: Python, JAVA, C, C+, C#, Javascript and Ruby.
+
+## Identification already implemented
 - tests
-	- removed
-	- added
-- class
-	- removed
-	- added
-- code
 	- removed
 	- added
 - imports
@@ -24,3 +17,15 @@
 	- removed
 	- added
 
+
+## future implementations
+- functions
+	- removed
+	- added
+	
+- class
+	- removed
+	- added
+- code
+	- removed
+	- added
