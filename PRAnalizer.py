@@ -8,10 +8,13 @@ class PRAnalizer():
 			self.possibilidades = {
 				# '.*def.*\(.*\)\:'		: 'functions',
 				# '.*class.*\(.*\)\:'		: 'class',
-				'.*assert.*\(.*\)'		: 'tests',  #olhar só esse
+				'.*assert.*\(.*'		: 'tests',  #olhar só esse
+				'.*expect.*\(.*'		: 'tests',  #olhar só esse
 				'.*import .*'			: 'imports', #olhar só esse
 				'..*from .*import .*'	: 'imports', #olhar só esse
 				'[\-|\+]\s{0,}#.*'		: 'comments',
+				'[\-|\+]\s{0,}""".*"""'		: 'comments',
+				"[\-|\+]\s{0,}'''.*'''"		: 'comments',
 			}
 
 		if(language == "JAVA"):
@@ -23,34 +26,37 @@ class PRAnalizer():
 				'[\-|\+]\s{0,}#.*'		: 'comments',
 				'[\-|\+]\s{0,}\/\*\*.*'	: 'comments',
 				'[\-|\+]\s{0,}\*\/.*'	: 'comments',
+				'[\-|\+]\s{0,}\/\/.*' 	: 'comments',
 			}
 
 		if(language == "C"):
 			self.possibilidades = {
 				'.*assert.*\(.*'	: 'tests', 
-
 				'.*\#include.*\.h'	: 'imports', 
 				
-				'.*\/\*.*\*\/'		: 'comments',
-				'.*\/\/'			: 'comments',
+				'[\-|\+]\s{0,}\/\*.*\*\/'		: 'comments',
+				'[\-|\+]\s{0,}\/\/.*'			: 'comments',
 			}
 
 		if(language == "C++"):
 			self.possibilidades = {
 				'.*assert.*\(.*'	: 'tests', 
+				'.*TEST_EQUAL\(.*'	: 'tests', 
 				'.*import .*\;'		: 'imports',
 				
-				'.*\/\*.*\*\/'		: 'comments',
-				'.*\/\/'			: 'comments',
+				'.*[\-|\+]\s{0,}\/\*.*\*\/'		: 'comments',
+				'[\-|\+]\s{0,}\/\/.*'			: 'comments',
 			}
 
 		if(language == "C#"):
 			self.possibilidades = {
 				'.*assert.*\(.*'	: 'tests', 
+				'.*Assert.*\(.*'	: 'tests', 
 				'.*import .*\;'		: 'imports',
-				
-				'.*\/\*.*\*\/'		: 'comments',
-				'.*\/\/'			: 'comments',
+				'.*using .*\;'		: 'imports',
+
+				'.*[\-|\+]\s{0,}\/\*.*\*\/'		: 'comments',
+				'[\-|\+]\s{0,}\/\/.*'			: 'comments',
 			}
 
 
@@ -58,10 +64,11 @@ class PRAnalizer():
 		if(language == "Javascript"):
 			self.possibilidades = {
 				'.*assert.*\(.*'	: 'tests', 
+				'.*expect\(.*\).*'	: 'tests', 
 				'.*import .*\;'		: 'imports',
 				
-				'.*\/\*.*\*\/'		: 'comments',
-				'.*\/\/'			: 'comments',
+				'.*[\-|\+]\s{0,}\/\*.*\*\/'		: 'comments',
+				'[\-|\+]\s{0,}\/\/.*'			: 'comments',
 			}
 
 		if(language == "Ruby"):
@@ -69,8 +76,8 @@ class PRAnalizer():
 				'.*assert.*'	 : 'tests', 
 				'.*require .*\;' : 'imports',
 				
-				'.*\/\*.*\*\/'		: 'comments',
-				'.*\/\/'			: 'comments',
+				'.*[\-|\+]\s{0,}\/\*.*\*\/'		: 'comments',
+				'[\-|\+]\s{0,}\/\/.*'			: 'comments',
 			}
 
 
@@ -80,11 +87,13 @@ class PRAnalizer():
 		if (len(text.strip()[1::]) == 0): 
 			tipo = 'whiteLines'
 
+		
 		for expressao in self.possibilidades:
-			validador = re.compile(expressao)
-
+			validador 	= re.compile(expressao)
+			
 			if validador.match(text.strip()):
 				tipo = self.possibilidades[expressao]
+
 
 		return tipo
 
