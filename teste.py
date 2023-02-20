@@ -23,5 +23,3 @@ for arquivo in json.loads(response.text):
 			modifierType 	= analizer.checkModifierType(item.strip())
 			dadosDoPR[result][modifierType] += 1
 			dadosDoPR['all'][modifierType] += 1
-
-print(dadosDoPR)
